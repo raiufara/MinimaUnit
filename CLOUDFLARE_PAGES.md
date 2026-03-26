@@ -105,5 +105,5 @@ Cloudflare Pages でカスタムドメインを使う場合は、デプロイ後
 ## 9. 運用メモ
 
 - 通貨の同梱参考レートは `npm run build` 時に自動更新されます。
-- favicon は build 前に自動生成されます。
+- favicon は build 前に存在確認を行います。再生成はローカル側で実施します。
 - ブランド差し替え時は、ロゴ資産と `index.html` / `manifest` / `Layout` をまとめて更新すると整合が取りやすいです。

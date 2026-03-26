@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "generate:currency-rates": "node scripts/generate-currency-rates.mjs",
-    "generate:favicon": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts\\generate-favicon-ico.ps1",
+    "generate:favicon": "node scripts/ensure-favicon-assets.mjs",
+    "generate:favicon:win": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts\\generate-favicon-ico.ps1",
     "prebuild": "npm run generate:currency-rates && npm run generate:favicon",
     "build": "tsc && vite build",
     "preview": "vite preview",

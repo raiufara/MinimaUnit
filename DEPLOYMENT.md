@@ -4,7 +4,8 @@
 
 - 本アプリは `Vite + React + BrowserRouter` の SPA です。
 - 本番成果物は `dist/` に出力されます。
-- 通貨の同梱参考レートと favicon は `npm run build` 時に自動生成されます。
+- 通貨の同梱参考レートは `npm run build` 時に自動生成されます。
+- favicon は build 時に必要ファイルの存在確認を行います。再生成が必要なときだけローカルで `npm run generate:favicon:win` を使います。
 - 年齢・期間、各種単位換算、設定、履歴はブラウザ内保存を前提にしています。
 
 ## すでに入っている公開向けファイル
@@ -90,5 +91,5 @@ npm run preview:host
 ## 補足
 
 - `npm run build` は毎回、通貨の同梱参考レートを最新化します。
-- `favicon.ico` は `scripts/generate-favicon-ico.ps1` から自動生成されます。
+- `favicon.ico` の再生成はローカルで `scripts/generate-favicon-ico.ps1` を使います。
 - 共有テキストや問い合わせ先を本番用に詰める場合は、`index.html` と `InfoDrawer` の文言を合わせて更新すると管理しやすいです。
