@@ -2,7 +2,7 @@
   "version": 1,
   "baseDate": "2026-03-25",
   "label": "2026年3月25日",
-  "fetchedAt": "2026-03-26T13:07:11.107Z",
+  "fetchedAt": "2026-03-26T13:46:59.073Z",
   "sourceLabel": "同梱レート（ECB参考値 + 台湾中銀NT$/US$終値）",
   "summary": "ECB公表の対ユーロ参考値を使用し、TWDは同日の台湾中銀NT$/US$終値から推定しています。実際の両替・決済レートとは異なる場合があります。",
   "twdDerivedFrom": "cbc-usd-cross",

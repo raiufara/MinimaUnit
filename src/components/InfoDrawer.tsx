@@ -7,6 +7,10 @@ interface InfoSection {
   intro: string;
   bullets?: string[];
   notes?: string[];
+  links?: Array<{
+    label: string;
+    href: string;
+  }>;
 }
 
 const INFO_SECTIONS: readonly InfoSection[] = [
@@ -44,12 +48,25 @@ const INFO_SECTIONS: readonly InfoSection[] = [
     label: 'お問い合わせ',
     title: 'お問い合わせ',
     intro:
-      '現在、お問い合わせ導線は公開準備中です。公開時には、改善要望や不具合報告を受け付ける窓口をこのセクションへ掲載します。',
+      '改善要望や不具合報告は、公開中の GitHub リポジトリから受け付けています。再現条件や利用環境が分かる情報を添えて共有いただけると確認がスムーズです。',
     bullets: [
       '不具合報告では、利用機能、入力内容、発生した画面、端末情報が分かると確認しやすくなります。',
       '通貨レートや制度変更に関する指摘は、基準日や参照元とあわせて共有されると対応が早くなります。'
     ],
-    notes: ['公開前のため、現時点ではアプリ内に送信フォームやメール窓口は設けていません。']
+    notes: [
+      '現時点では、アプリ内フォームや専用メール窓口は設けていません。必要に応じて今後追加します。',
+      '公開サイトのURLは https://minimaunit.pages.dev/ です。'
+    ],
+    links: [
+      {
+        label: '公開サイトを開く',
+        href: 'https://minimaunit.pages.dev/'
+      },
+      {
+        label: 'GitHub Issues を開く',
+        href: 'https://github.com/raiufara/MinimaUnit/issues'
+      }
+    ]
   },
   {
     id: 'currency',
@@ -135,6 +152,22 @@ export function InfoDrawer({ open, activeSection, onClose, onSectionChange }: In
                   <p key={note} className="info-note">
                     {note}
                   </p>
+                ))}
+              </div>
+            ) : null}
+
+            {currentSection.links ? (
+              <div className="info-link-row">
+                {currentSection.links.map((link) => (
+                  <a
+                    key={link.href}
+                    className="info-link-button"
+                    href={link.href}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {link.label}
+                  </a>
                 ))}
               </div>
             ) : null}
