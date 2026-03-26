@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ja"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ユニットへるぱー - 年号・西暦・年齢変換</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface": "#fafaf5",
+              "surface-tint": "#505f78",
+              "on-secondary-container": "#546479",
+              "on-secondary": "#ffffff",
+              "primary-fixed": "#d4e3ff",
+              "surface-bright": "#fafaf5",
+              "primary-container": "#1a2a40",
+              "on-tertiary-fixed": "#002204",
+              "on-surface-variant": "#44474d",
+              "on-error-container": "#93000a",
+              "on-tertiary-fixed-variant": "#005312",
+              "secondary-fixed-dim": "#b7c8e0",
+              "on-primary-fixed-variant": "#38485f",
+              "inverse-primary": "#b7c7e4",
+              "tertiary-fixed": "#a3f69c",
+              "surface-container": "#eeeee9",
+              "secondary": "#506075",
+              "tertiary-container": "#003107",
+              "on-tertiary": "#ffffff",
+              "outline-variant": "#c4c6cd",
+              "surface-container-high": "#e8e8e3",
+              "on-secondary-fixed": "#0b1c2f",
+              "on-primary-fixed": "#0b1c31",
+              "tertiary": "#001a02",
+              "secondary-container": "#d0e1fa",
+              "background": "#fafaf5",
+              "surface-dim": "#dadad5",
+              "on-surface": "#1a1c19",
+              "primary-fixed-dim": "#b7c7e4",
+              "on-error": "#ffffff",
+              "outline": "#75777d",
+              "on-primary-container": "#8191ac",
+              "error": "#ba1a1a",
+              "surface-container-highest": "#e3e3de",
+              "primary": "#04152b",
+              "inverse-surface": "#2f312e",
+              "on-tertiary-container": "#52a151",
+              "on-primary": "#ffffff",
+              "on-background": "#1a1c19",
+              "inverse-on-surface": "#f1f1ec",
+              "error-container": "#ffdad6",
+              "surface-container-low": "#f4f4ef",
+              "surface-container-lowest": "#ffffff",
+              "on-secondary-fixed-variant": "#38485c",
+              "secondary-fixed": "#d3e4fd",
+              "surface-variant": "#e3e3de",
+              "tertiary-fixed-dim": "#88d982"
+            },
+            fontFamily: {
+              "headline": ["Work Sans", "sans-serif"],
+              "body": ["Work Sans", "sans-serif"],
+              "label": ["Work Sans", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .filled-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+        body {
+            background-color: #fafaf5;
+            color: #1a1c19;
+            font-family: 'Work Sans', 'Noto Sans JP', sans-serif;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+<!-- Top Navigation Shell -->
+<header class="bg-[#fafaf5] dark:bg-[#04152b] flex justify-between items-center w-full px-8 py-4 sticky top-0 z-50 border-b border-surface-container">
+<div class="flex items-center gap-8">
+<span class="text-2xl font-bold text-[#04152b] dark:text-[#fafaf5] tracking-tighter">ユニットへるぱー</span>
+</div>
+<div class="flex items-center gap-6">
+<span class="material-symbols-outlined text-[#44474d] dark:text-[#f4f4ef] opacity-70 hover:bg-[#f4f4ef] dark:hover:bg-[#1a2a40] transition-colors p-2 rounded-full cursor-pointer">wifi_off</span>
+<span class="material-symbols-outlined text-[#44474d] dark:text-[#f4f4ef] opacity-70 hover:bg-[#f4f4ef] dark:hover:bg-[#1a2a40] transition-colors p-2 rounded-full cursor-pointer">settings</span>
+<span class="material-symbols-outlined text-[#44474d] dark:text-[#f4f4ef] opacity-70 hover:bg-[#f4f4ef] dark:hover:bg-[#1a2a40] transition-colors p-2 rounded-full cursor-pointer">account_circle</span>
+</div>
+</header>
+<!-- Sub-header: Navigation Cluster -->
+<nav class="bg-surface px-8 pt-4 pb-6 overflow-x-auto border-b border-surface-container">
+<div class="flex gap-4 min-w-max">
+<button class="flex flex-col items-center gap-2 p-4 min-w-[100px] bg-primary-container text-on-primary rounded-lg transition-all duration-300 shadow-md">
+<span class="material-symbols-outlined filled-icon" style='font-variation-settings: "FILL" 1;'>calendar_month</span>
+<span class="text-sm font-bold tracking-tight">年号・年齢</span>
+</button>
+<button class="flex flex-col items-center gap-2 p-4 min-w-[100px] text-on-surface-variant rounded-lg transition-all border border-on-surface-variant border-opacity-10 hover:bg-surface-container-low hover:border-opacity-30">
+<span class="material-symbols-outlined">straighten</span>
+<span class="text-sm font-medium opacity-80">長さ</span>
+</button>
+<button class="flex flex-col items-center gap-2 p-4 min-w-[100px] text-on-surface-variant rounded-lg transition-all border border-on-surface-variant border-opacity-10 hover:bg-surface-container-low hover:border-opacity-30">
+<span class="material-symbols-outlined">scale</span>
+<span class="text-sm font-medium opacity-80">重さ</span>
+</button>
+<button class="flex flex-col items-center gap-2 p-4 min-w-[100px] text-on-surface-variant rounded-lg transition-all border border-on-surface-variant border-opacity-10 hover:bg-surface-container-low hover:border-opacity-30">
+<span class="material-symbols-outlined">texture</span>
+<span class="text-sm font-medium opacity-80">面積</span>
+</button>
+<button class="flex flex-col items-center gap-2 p-4 min-w-[100px] text-on-surface-variant rounded-lg transition-all border border-on-surface-variant border-opacity-10 hover:bg-surface-container-low hover:border-opacity-30">
+<span class="material-symbols-outlined">view_in_ar</span>
+<span class="text-sm font-medium opacity-80">体積</span>
+</button>
+<button class="flex flex-col items-center gap-2 p-4 min-w-[100px] text-on-surface-variant rounded-lg transition-all border border-on-surface-variant border-opacity-10 hover:bg-surface-container-low hover:border-opacity-30">
+<span class="material-symbols-outlined">thermostat</span>
+<span class="text-sm font-medium opacity-80">温度</span>
+</button>
+<button class="flex flex-col items-center gap-2 p-4 min-w-[100px] text-on-surface-variant rounded-lg transition-all border border-on-surface-variant border-opacity-10 hover:bg-surface-container-low hover:border-opacity-30">
+<span class="material-symbols-outlined">speed</span>
+<span class="text-sm font-medium opacity-80">速度</span>
+</button>
+<button class="flex flex-col items-center gap-2 p-4 min-w-[100px] text-on-surface-variant rounded-lg transition-all border border-on-surface-variant border-opacity-10 hover:bg-surface-container-low hover:border-opacity-30">
+<span class="material-symbols-outlined">payments</span>
+<span class="text-sm font-medium opacity-80">通貨</span>
+</button>
+</div>
+</nav>
+<!-- Page Content -->
+<main class="max-w-7xl mx-auto px-8 py-10">
+<!-- Feature Sub-header -->
+<div class="flex items-center justify-between mb-8">
+<div class="flex items-center gap-4">
+<h1 class="text-4xl font-extrabold text-primary tracking-tight">年号・西暦・年齢</h1>
+<div class="flex items-center gap-2 bg-tertiary-fixed px-3 py-1 rounded-full">
+<span class="w-2 h-2 bg-on-tertiary-fixed-variant rounded-full shadow-[0_0_8px_rgba(0,83,18,0.5)]"></span>
+<span class="text-xs font-bold text-on-tertiary-fixed-variant">オフライン利用可</span>
+</div>
+</div>
+<button class="flex items-center gap-2 text-primary font-semibold hover:bg-surface-container-low px-4 py-2 rounded-full transition-all">
+<span class="material-symbols-outlined">history</span>
+                履歴を表示
+            </button>
+</div>
+<!-- Today's Date Section -->
+<div class="rounded-lg p-6 mb-10 flex flex-col md:flex-row md:items-center justify-between gap-4 border border-outline-variant border-opacity-20 shadow-sm bg-white max-w-md">
+<div class="flex items-center gap-4">
+<span class="text-on-surface-variant font-bold text-sm tracking-widest uppercase whitespace-nowrap">今日の日付</span>
+<span class="w-px h-6 bg-outline-variant opacity-30 hidden md:block"></span>
+<p class="text-3xl font-black text-primary flex items-baseline gap-1">
+                    2025<span class="text-sm font-bold text-on-surface-variant">年</span> 
+                    12<span class="text-sm font-bold text-on-surface-variant">月</span> 
+                    1<span class="text-sm font-bold text-on-surface-variant">日</span>
+</p>
+</div>
+<div class="bg-primary-container px-4 py-2 rounded-full shadow-sm">
+<span class="text-on-primary font-bold text-base whitespace-nowrap">令和 7 年</span>
+</div>
+</div>
+<!-- 2-Column Bento Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+<!-- Left Column: Input Card -->
+<section class="lg:col-span-5 flex flex-col">
+<div class="bg-surface-container-lowest p-6 rounded-lg shadow-[0px_10px_30px_rgba(26,28,25,0.06)] ring-1 ring-outline-variant ring-opacity-10 flex-1 flex flex-col">
+<div class="flex items-center justify-between mb-6">
+<h2 class="text-xl font-bold text-primary">入力設定</h2>
+<button class="flex items-center gap-1 px-4 py-1.5 text-xs font-bold text-primary bg-secondary-container border border-outline-variant border-opacity-30 rounded-full hover:bg-opacity-80 transition-all shadow-sm">
+<span class="material-symbols-outlined text-sm">refresh</span>
+                            リセット
+                        </button>
+</div>
+<!-- Input Group: Reference Date -->
+<div class="space-y-4 mb-6">
+<div class="flex items-center justify-between">
+<label class="text-sm font-bold text-on-surface-variant tracking-wider">基準日 / 生年月日</label>
+<div class="flex bg-surface-container-low p-1 rounded-full ring-1 ring-outline-variant ring-opacity-20">
+<button class="px-4 py-1 text-xs font-bold bg-surface-container-lowest text-primary rounded-full shadow-sm">年月日</button>
+<button class="px-4 py-1 text-xs font-medium text-on-surface-variant">年のみ</button>
+</div>
+</div>
+<div class="space-y-2">
+<div class="grid gap-2 grid-cols-5">
+<button class="h-10 flex items-center justify-center rounded-lg bg-primary text-on-primary font-bold shadow-md transition-all text-sm">令和</button>
+<button class="h-10 flex items-center justify-center rounded-lg bg-surface-container-low text-on-surface-variant font-medium border border-outline-variant border-opacity-30 hover:bg-surface-container-high transition-all text-sm">平成</button>
+<button class="h-10 flex items-center justify-center rounded-lg bg-surface-container-low text-on-surface-variant font-medium border border-outline-variant border-opacity-30 hover:bg-surface-container-high transition-all text-sm">昭和</button>
+<button class="h-10 flex items-center justify-center rounded-lg bg-surface-container-low text-on-surface-variant font-medium border border-outline-variant border-opacity-30 hover:bg-surface-container-high transition-all text-sm">大正</button>
+<button class="h-10 flex items-center justify-center rounded-lg bg-surface-container-low text-on-surface-variant font-medium border border-outline-variant border-opacity-30 hover:bg-surface-container-high transition-all text-sm">明治</button>
+</div>
+<div class="grid gap-2 grid-cols-5">
+<button class="h-10 flex items-center justify-center rounded-lg bg-surface-container-low text-on-surface-variant font-medium border border-outline-variant border-opacity-30 hover:bg-surface-container-high transition-all text-sm">西暦</button>
+<button class="h-10 flex items-center justify-center rounded-lg bg-surface-container-low text-on-surface-variant font-medium border border-outline-variant border-opacity-30 hover:bg-surface-container-high transition-all text-sm">年齢</button>
+<div class="col-span-3"></div>
+</div>
+</div>
+<div class="flex gap-3 items-center">
+<div class="relative w-[40%]">
+<input class="w-full h-12 bg-surface-container-lowest ring-1 ring-outline-variant ring-opacity-30 rounded-lg text-primary font-medium focus:ring-2 focus:ring-primary focus:border-none outline-none text-base text-center pr-8" placeholder="2025" type="number"/>
+<span class="absolute right-2 top-1/2 -translate-y-1/2 text-xs font-bold text-on-surface-variant">年</span>
+</div>
+<div class="relative w-[30%]">
+<input class="w-full h-12 bg-surface-container-lowest ring-1 ring-outline-variant ring-opacity-30 rounded-lg text-primary font-medium focus:ring-2 focus:ring-primary focus:border-none outline-none text-base text-center pr-8" placeholder="12" type="number"/>
+<span class="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-on-surface-variant">月</span>
+</div>
+<div class="relative w-[30%]">
+<input class="w-full h-12 bg-surface-container-lowest ring-1 ring-outline-variant ring-opacity-30 rounded-lg text-primary font-medium focus:ring-2 focus:ring-primary focus:border-none outline-none text-base text-center pr-8" placeholder="1" type="number"/>
+<span class="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-on-surface-variant">日</span>
+</div>
+</div>
+</div>
+<!-- Separator -->
+<div class="h-[1px] bg-surface-container mb-6"></div>
+<!-- Input Group: Target Date -->
+<div class="space-y-4 flex-1">
+<div class="flex items-center justify-between">
+<label class="text-sm font-bold text-on-surface-variant tracking-wider">対象日</label>
+<div class="flex bg-surface-container-low p-1 rounded-full ring-1 ring-outline-variant ring-opacity-20">
+<button class="px-4 py-1 text-xs font-bold bg-surface-container-lowest text-primary rounded-full shadow-sm">年月日</button>
+<button class="px-4 py-1 text-xs font-medium text-on-surface-variant">年のみ</button>
+</div>
+</div>
+<div class="space-y-2">
+<div class="grid gap-2 grid-cols-5">
+<button class="h-10 flex items-center justify-center rounded-lg bg-primary text-on-primary font-bold shadow-md transition-all text-sm">令和</button>
+<button class="h-10 flex items-center justify-center rounded-lg bg-surface-container-low text-on-surface-variant font-medium border border-outline-variant border-opacity-30 hover:bg-surface-container-high transition-all text-sm">平成</button>
+<button class="h-10 flex items-center justify-center rounded-lg bg-surface-container-low text-on-surface-variant font-medium border border-outline-variant border-opacity-30 hover:bg-surface-container-high transition-all text-sm">昭和</button>
+<button class="h-10 flex items-center justify-center rounded-lg bg-surface-container-low text-on-surface-variant font-medium border border-outline-variant border-opacity-30 hover:bg-surface-container-high transition-all text-sm opacity-40 cursor-not-allowed">大正</button>
+<button class="h-10 flex items-center justify-center rounded-lg bg-surface-container-low text-on-surface-variant font-medium border border-outline-variant border-opacity-30 hover:bg-surface-container-high transition-all text-sm opacity-40 cursor-not-allowed">明治</button>
+</div>
+<div class="grid gap-2 grid-cols-5">
+<button class="h-10 flex items-center justify-center rounded-lg bg-surface-container-low text-on-surface-variant font-medium border border-outline-variant border-opacity-30 hover:bg-surface-container-high transition-all text-sm">西暦</button>
+<button class="h-10 flex items-center justify-center rounded-lg bg-surface-container-low text-on-surface-variant font-medium border border-outline-variant border-opacity-30 hover:bg-surface-container-high transition-all text-sm">年齢</button>
+<div class="col-span-3"></div>
+</div>
+</div>
+<div class="flex gap-3 items-center">
+<div class="relative w-[40%]">
+<input class="w-full h-12 bg-surface-container-lowest ring-1 ring-outline-variant ring-opacity-30 rounded-lg text-primary font-medium focus:ring-2 focus:ring-primary outline-none text-base text-center pr-8" type="number" value="7"/>
+<span class="absolute right-2 top-1/2 -translate-y-1/2 text-xs font-bold text-on-surface-variant">年</span>
+</div>
+<div class="relative w-[30%]">
+<input class="w-full h-12 bg-surface-container-lowest ring-1 ring-outline-variant ring-opacity-30 rounded-lg text-primary font-medium focus:ring-2 focus:ring-primary outline-none text-base text-center pr-8" type="number" value="12"/>
+<span class="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-on-surface-variant">月</span>
+</div>
+<div class="relative w-[30%]">
+<input class="w-full h-12 bg-surface-container-lowest ring-1 ring-outline-variant ring-opacity-30 rounded-lg text-primary font-medium focus:ring-2 focus:ring-primary outline-none text-base text-center pr-8" type="number" value="1"/>
+<span class="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-on-surface-variant">日</span>
+</div>
+</div>
+</div>
+<button class="w-full mt-5 py-4 bg-gradient-to-br from-primary to-primary-container text-white font-bold rounded-lg shadow-lg hover:shadow-xl transition-all active:scale-[0.98]">
+                        計算を実行
+                    </button>
+</div>
+</section>
+<!-- Right Column: Results Card -->
+<section class="lg:col-span-7 flex flex-col">
+<div class="bg-surface-container-lowest p-6 rounded-lg shadow-[0px_10px_30px_rgba(26,28,25,0.06)] ring-1 ring-outline-variant ring-opacity-10 flex-1 flex flex-col">
+<div class="flex items-center justify-between mb-6">
+<h2 class="text-xl font-bold text-primary">計算結果</h2>
+<button class="flex items-center gap-2 text-primary font-bold bg-secondary-container px-6 py-2.5 rounded-full hover:bg-opacity-80 transition-all text-sm">
+<span class="material-symbols-outlined text-[20px]">content_copy</span>
+                            結果をコピー
+                        </button>
+</div>
+<!-- Results List -->
+<div class="space-y-4 flex-1">
+<!-- Main Identity Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="bg-surface-container-low p-4 rounded-lg border border-outline-variant border-opacity-10 shadow-sm flex flex-col items-center justify-center text-center h-[110px]">
+<span class="text-xs font-bold text-on-surface-variant tracking-widest uppercase mb-1">年号</span>
+<div class="flex items-baseline gap-1">
+<span class="text-4xl font-black text-primary">令和7年</span>
+</div>
+</div>
+<div class="bg-surface-container-low p-4 rounded-lg border border-outline-variant border-opacity-10 shadow-sm flex flex-col items-center justify-center text-center h-[110px]">
+<span class="text-xs font-bold text-on-surface-variant tracking-widest uppercase mb-1">十干十二支</span>
+<div class="mt-1">
+<span class="text-3xl font-black text-primary">庚申</span>
+<p class="text-[10px] font-bold text-on-surface-variant mt-0.5 opacity-70">かのえ・さる</p>
+</div>
+</div>
+</div>
+<!-- Secondary Details -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Seireki -->
+<div class="bg-surface-container-low p-4 rounded-lg border border-outline-variant border-opacity-10 shadow-sm flex flex-col items-center justify-center text-center h-[110px]">
+<span class="text-xs font-bold text-on-surface-variant tracking-widest uppercase mb-1">西暦</span>
+<div class="flex items-baseline gap-1">
+<span class="text-3xl font-black text-primary">2025</span>
+<span class="text-sm font-bold text-on-surface-variant">年</span>
+</div>
+</div>
+<!-- Age -->
+<div class="bg-surface-container-low p-4 rounded-lg border border-outline-variant border-opacity-10 shadow-sm flex flex-col items-center justify-center text-center h-[110px]">
+<span class="text-xs font-bold text-on-surface-variant tracking-widest uppercase mb-1">満年齢</span>
+<div class="flex items-baseline gap-1">
+<span class="text-3xl font-black text-primary">24</span>
+<span class="text-sm font-bold text-on-surface-variant">歳</span>
+</div>
+</div>
+</div>
+<!-- Span Result -->
+<div class="p-4 rounded-lg bg-surface-container-low border border-outline-variant border-opacity-10 shadow-sm flex flex-col items-center justify-center text-center h-[110px]">
+<span class="text-xs font-bold text-on-surface-variant tracking-widest uppercase mb-2">経過期間（年・月・日）</span>
+<div class="flex items-baseline flex-wrap justify-center gap-x-4">
+<div class="flex items-baseline gap-0.5">
+<span class="text-3xl font-bold text-primary">24</span>
+<span class="text-xs font-medium text-on-surface-variant">年</span>
+</div>
+<div class="flex items-baseline gap-0.5">
+<span class="text-3xl font-bold text-primary">0</span>
+<span class="text-xs font-medium text-on-surface-variant">ヶ月</span>
+</div>
+<div class="flex items-baseline gap-0.5">
+<span class="text-3xl font-bold text-primary">0</span>
+<span class="text-xs font-medium text-on-surface-variant">日</span>
+</div>
+</div>
+</div>
+<!-- Bottom Stats Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Months & Days Span -->
+<div class="bg-surface-container-low p-4 rounded-lg border border-outline-variant border-opacity-10 shadow-sm flex flex-col items-center justify-center text-center h-[110px]">
+<span class="text-xs font-bold text-on-surface-variant tracking-widest uppercase mb-2">経過期間（月・日）</span>
+<div class="flex items-baseline justify-center gap-x-3">
+<div class="flex items-baseline gap-0.5">
+<span class="text-3xl font-extrabold text-primary">288</span>
+<span class="text-xs font-bold text-on-surface-variant">ヶ月</span>
+</div>
+<div class="flex items-baseline gap-0.5">
+<span class="text-3xl font-extrabold text-primary">0</span>
+<span class="text-xs font-bold text-on-surface-variant">日</span>
+</div>
+</div>
+</div>
+<!-- Days Total -->
+<div class="bg-surface-container-low p-4 rounded-lg border border-outline-variant border-opacity-10 shadow-sm flex flex-col items-center justify-center text-center h-[110px]">
+<span class="text-xs font-bold text-on-surface-variant tracking-widest uppercase block mb-1">経過期間（日）</span>
+<div class="flex items-baseline gap-1">
+<span class="text-3xl font-extrabold text-primary">8,766</span>
+<span class="text-sm font-bold text-on-surface-variant">日</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Visual Texture Area -->
+<div class="mt-6 p-4 rounded-lg bg-primary-container relative overflow-hidden group">
+<div class="relative z-10">
+<p class="text-on-primary text-xs leading-relaxed font-medium opacity-90 max-w-lg">
+                                西暦と和暦の変換、年齢の計算、および2つの日付の間の正確な日数を即座に算出します。公的書類の作成や、記念日の計算にご活用ください。
+                            </p>
+</div>
+<div class="absolute -right-4 -bottom-4 opacity-10 group-hover:scale-110 transition-transform duration-700">
+<span class="material-symbols-outlined text-[80px] text-white">calculate</span>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Footer -->
+<footer class="mt-20 py-10 border-t border-surface-container">
+<div class="max-w-7xl mx-auto px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+<span class="text-xl font-bold text-primary tracking-tighter opacity-50">ユニットへるぱー</span>
+<div class="flex gap-8 text-sm font-medium text-on-surface-variant">
+<a class="hover:text-primary" href="#">プライバシーポリシー</a>
+<a class="hover:text-primary" href="#">利用規約</a>
+<a class="hover:text-primary" href="#">お問い合わせ</a>
+</div>
+<p class="text-xs text-on-surface-variant opacity-60">© 2024 Unit Helper. All Rights Reserved.</p>
+</div>
+</footer>
+</body></html>

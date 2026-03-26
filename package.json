@@ -1,0 +1,35 @@
+{
+  "name": "minimaunit-smart-converter",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "generate:currency-rates": "node scripts/generate-currency-rates.mjs",
+    "generate:favicon": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts\\generate-favicon-ico.ps1",
+    "prebuild": "npm run generate:currency-rates && npm run generate:favicon",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "preview:host": "vite preview --host 0.0.0.0 --port 4173",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "smoke": "node scripts/smoke.mjs all",
+    "smoke:ux": "node scripts/smoke.mjs ux",
+    "smoke:io": "node scripts/smoke.mjs io",
+    "release:check": "node scripts/release-check.mjs"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.30.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "playwright": "^1.58.2",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.1",
+    "vitest": "^4.1.0"
+  }
+}

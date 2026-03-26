@@ -1,0 +1,51 @@
+{
+  "id": "/",
+  "name": "MinimaUnit - Smart Converter",
+  "short_name": "MinimaUnit - Smart Converter",
+  "description": "MinimaUnit - Smart Converter は、年齢・期間、長さ、重さ、面積、体積、温度、速度、通貨をまとめて確認できるオフライン対応の Web/PWA アプリです。",
+  "lang": "ja",
+  "dir": "ltr",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["standalone", "browser"],
+  "orientation": "any",
+  "background_color": "#f4f4ef",
+  "theme_color": "#16324f",
+  "categories": ["productivity", "utilities", "finance", "education"],
+  "prefer_related_applications": false,
+  "shortcuts": [
+    {
+      "name": "年齢・期間",
+      "short_name": "年齢・期間",
+      "description": "年号・西暦・年齢・経過期間を確認します。",
+      "url": "/era-age"
+    },
+    {
+      "name": "長さ",
+      "short_name": "長さ",
+      "description": "長さの単位をすばやく換算します。",
+      "url": "/length"
+    },
+    {
+      "name": "通貨",
+      "short_name": "通貨",
+      "description": "主要通貨を参考レートで比較します。",
+      "url": "/currency"
+    }
+  ],
+  "icons": [
+    {
+      "src": "/icon-192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
