@@ -1,0 +1,12 @@
+node_modules/
+dist/
+artifacts/
+.codex-temp/
+
+# Vite / Vitest generated caches
+.vite/
+node_modules/.vite/
+
+# Logs
+*.log
+npm-debug.log*
