@@ -14,6 +14,7 @@ export const LAST_ACTIVE_TOOL_STORAGE_KEY = 'unit-helper-last-tool-v1';
 
 export const DEFAULT_APP_SETTINGS: AppSettings = {
   version: 1,
+  themeMode: 'system',
   startupTool: 'era-age',
   preferLastTool: true,
   historyAutosave: true,
@@ -40,6 +41,10 @@ function normalizeSettings(candidate: unknown): AppSettings | null {
   }
 
   const parsed = candidate as Partial<AppSettings>;
+  const themeMode =
+    parsed.themeMode === 'light' || parsed.themeMode === 'dark' || parsed.themeMode === 'system'
+      ? parsed.themeMode
+      : DEFAULT_APP_SETTINGS.themeMode;
   const preferLastTool = typeof parsed.preferLastTool === 'boolean' ? parsed.preferLastTool : DEFAULT_APP_SETTINGS.preferLastTool;
   const historySaveCount =
     parsed.historySaveCount && HISTORY_SAVE_COUNT_OPTIONS.includes(parsed.historySaveCount)
@@ -67,6 +72,7 @@ function normalizeSettings(candidate: unknown): AppSettings | null {
 
   return {
     version: 1,
+    themeMode,
     startupTool: parsed.startupTool,
     preferLastTool,
     historyAutosave: parsed.historyAutosave,

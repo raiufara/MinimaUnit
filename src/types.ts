@@ -13,6 +13,7 @@ export type CurrencyUnit = 'jpy' | 'usd' | 'eur' | 'cny' | 'krw' | 'twd' | 'thb'
 export type CurrencyMode = 'standard' | 'travel' | 'business';
 export type CurrencyCooldownMinutes = 3 | 5 | 10;
 export type HistorySaveCount = 5 | 10 | 20;
+export type ThemeMode = 'light' | 'dark' | 'system';
 export type InfoSectionId = 'privacy' | 'terms' | 'contact' | 'currency';
 
 export interface DateInput {
@@ -105,6 +106,7 @@ export interface CurrencyState {
 
 export interface AppSettings {
   version: 1;
+  themeMode: ThemeMode;
   startupTool: ToolId;
   preferLastTool: boolean;
   historyAutosave: boolean;

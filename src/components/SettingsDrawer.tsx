@@ -17,6 +17,12 @@ interface SettingsDrawerProps {
   onReset: () => void;
 }
 
+const THEME_MODE_OPTIONS = [
+  { key: 'light', label: 'ライト' },
+  { key: 'dark', label: 'ダーク' },
+  { key: 'system', label: 'システム' }
+] as const;
+
 const WEIGHT_MODE_OPTIONS = [
   { key: 'standard', label: '標準' },
   { key: 'logistics', label: '物流' },
@@ -83,7 +89,12 @@ export function SettingsDrawer({ open, settings, tools, onClose, onChange, onRes
             <p className="top-label">App Preferences</p>
             <h3>設定</h3>
           </div>
-          <button type="button" className="header-icon-button history-close-button" aria-label="設定を閉じる" onClick={onClose}>
+          <button
+            type="button"
+            className="header-icon-button history-close-button"
+            aria-label="設定を閉じる"
+            onClick={onClose}
+          >
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <path d="M6 6l12 12M18 6 6 18" />
             </svg>
@@ -91,13 +102,30 @@ export function SettingsDrawer({ open, settings, tools, onClose, onChange, onRes
         </div>
 
         <p className="settings-intro">
-          変更はこの端末に保存します。起動ツールや既定モードは次回起動とリセット時に、履歴保存と更新間隔はすぐに反映します。
+          表示テーマや起動ツール、履歴の扱い、各ツールの既定モードをこの端末に保存します。あとで見直しやすいよう、
+          全体設定とツール別設定を分けて調整できます。
         </p>
 
         <div className="settings-section">
           <div className="settings-section-head">
             <h4>全体</h4>
-            <p>アプリ全体の使い方を整えます。</p>
+            <p>アプリ全体の使い方と表示テーマを整えます。</p>
+          </div>
+
+          <div className="settings-field">
+            <label>テーマ</label>
+            <div className="settings-chip-row">
+              {THEME_MODE_OPTIONS.map((option) => (
+                <button
+                  key={option.key}
+                  type="button"
+                  className={settings.themeMode === option.key ? 'settings-chip active' : 'settings-chip'}
+                  onClick={() => onChange({ ...settings, themeMode: option.key })}
+                >
+                  {option.label}
+                </button>
+              ))}
+            </div>
           </div>
 
           <div className="settings-field">
@@ -153,7 +181,7 @@ export function SettingsDrawer({ open, settings, tools, onClose, onChange, onRes
                 className={!settings.preferLastTool ? 'settings-chip active' : 'settings-chip'}
                 onClick={() => onChange({ ...settings, preferLastTool: false })}
               >
-                使わない
+                優先しない
               </button>
             </div>
           </div>
@@ -178,7 +206,7 @@ export function SettingsDrawer({ open, settings, tools, onClose, onChange, onRes
         <div className="settings-section">
           <div className="settings-section-head">
             <h4>ツール既定値</h4>
-            <p>各ツールの初期モードを決めます。</p>
+            <p>各ツールの初期モードを整えます。</p>
           </div>
 
           <div className="settings-field">
@@ -249,7 +277,7 @@ export function SettingsDrawer({ open, settings, tools, onClose, onChange, onRes
         <div className="settings-section">
           <div className="settings-section-head">
             <h4>通貨</h4>
-            <p>参考レートの更新間隔を調整します。</p>
+            <p>参考レート更新の間隔を調整します。</p>
           </div>
 
           <div className="settings-field">

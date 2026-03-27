@@ -35,6 +35,34 @@
   --focus-ring-strong: rgba(4, 21, 43, 0.72);
 }
 
+:root[data-theme='dark'] {
+  color: #f5f7fb;
+  background:
+    radial-gradient(circle at 20% 0%, rgba(56, 189, 248, 0.16), transparent 28%),
+    linear-gradient(180deg, #0b121e 0%, #121b2a 100%);
+  color-scheme: dark;
+  --primary: #f5f7fb;
+  --primary-container: #245f68;
+  --surface: #0b121e;
+  --surface-low: #132032;
+  --surface-card: #172335;
+  --surface-muted: #1d2b3d;
+  --surface-variant: #243449;
+  --text: #f5f7fb;
+  --text-subtle: #94a3b8;
+  --outline: rgba(148, 163, 184, 0.16);
+  --outline-strong: rgba(148, 163, 184, 0.32);
+  --success: #88d982;
+  --success-soft: #9ff39e;
+  --warning: #ffcf70;
+  --warning-soft: rgba(147, 95, 0, 0.28);
+  --error: #ffb4ab;
+  --error-soft: rgba(147, 0, 10, 0.28);
+  --shadow: 0 18px 48px rgba(2, 8, 18, 0.42);
+  --focus-ring: rgba(56, 189, 248, 0.22);
+  --focus-ring-strong: rgba(163, 246, 156, 0.68);
+}
+
 * {
   box-sizing: border-box;
 }
@@ -148,6 +176,11 @@ button {
   stroke-width: 2.1;
   stroke-linecap: round;
   stroke-linejoin: round;
+}
+
+.header-icon-button .gear-mark {
+  fill: var(--primary);
+  stroke: none;
 }
 
 .header-icon-button:hover {
@@ -2501,4 +2534,193 @@ button {
   .currency-base-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+}
+
+:root[data-theme='dark'] body {
+  background: var(--surface);
+}
+
+:root[data-theme='dark'] .header-icon-button,
+:root[data-theme='dark'] .history-button,
+:root[data-theme='dark'] .today-card,
+:root[data-theme='dark'] .panel,
+:root[data-theme='dark'] .placeholder-card,
+:root[data-theme='dark'] .history-drawer,
+:root[data-theme='dark'] .settings-drawer,
+:root[data-theme='dark'] .info-drawer,
+:root[data-theme='dark'] .info-card,
+:root[data-theme='dark'] .settings-section,
+:root[data-theme='dark'] .history-item,
+:root[data-theme='dark'] .result-card-block,
+:root[data-theme='dark'] .length-result-tile,
+:root[data-theme='dark'] .length-value-pill,
+:root[data-theme='dark'] .currency-reference-card,
+:root[data-theme='dark'] .duration-row div {
+  background: rgba(23, 35, 53, 0.92);
+  box-shadow:
+    0 18px 48px rgba(2, 8, 18, 0.34),
+    inset 0 0 0 1px rgba(148, 163, 184, 0.12);
+}
+
+:root[data-theme='dark'] .history-overlay,
+:root[data-theme='dark'] .settings-overlay,
+:root[data-theme='dark'] .info-overlay {
+  background: rgba(4, 11, 21, 0.58);
+}
+
+:root[data-theme='dark'] .status-pill {
+  background: rgba(23, 35, 53, 0.94);
+  box-shadow:
+    inset 0 0 0 1px rgba(148, 163, 184, 0.12),
+    0 12px 26px rgba(2, 8, 18, 0.24);
+  color: var(--text-subtle);
+}
+
+:root[data-theme='dark'] .status-pill.online {
+  background:
+    radial-gradient(circle at 12% 50%, rgba(136, 217, 130, 0.14), transparent 34%),
+    rgba(23, 35, 53, 0.96);
+}
+
+:root[data-theme='dark'] .status-pill.offline {
+  background:
+    radial-gradient(circle at 12% 50%, rgba(183, 199, 228, 0.12), transparent 34%),
+    rgba(23, 35, 53, 0.96);
+}
+
+:root[data-theme='dark'] .tool-chip {
+  background: linear-gradient(180deg, rgba(23, 35, 53, 0.96) 0%, rgba(18, 32, 50, 0.94) 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(148, 163, 184, 0.12),
+    0 10px 24px rgba(2, 8, 18, 0.18);
+  color: var(--text-subtle);
+}
+
+:root[data-theme='dark'] .tool-chip.active,
+:root[data-theme='dark'] .info-tab-button.active,
+:root[data-theme='dark'] .settings-chip.active,
+:root[data-theme='dark'] .history-action-button.primary,
+:root[data-theme='dark'] .mode-toggle-button.active,
+:root[data-theme='dark'] .usage-mode-button.active,
+:root[data-theme='dark'] .history-filter-button.active,
+:root[data-theme='dark'] .aux-chip.active,
+:root[data-theme='dark'] .era-button.active,
+:root[data-theme='dark'] .length-unit-button.active,
+:root[data-theme='dark'] .primary-button,
+:root[data-theme='dark'] .today-card-main span,
+:root[data-theme='dark'] .info-link-button,
+:root[data-theme='dark'] .ghost-action.highlight {
+  background: linear-gradient(135deg, #18314c 0%, #245f68 100%);
+  color: #ffffff;
+  box-shadow: 0 16px 34px rgba(2, 8, 18, 0.34);
+}
+
+:root[data-theme='dark'] .header-icon-button:hover,
+:root[data-theme='dark'] .history-button:hover,
+:root[data-theme='dark'] .tool-chip:not(.active):not(.disabled):hover,
+:root[data-theme='dark'] .info-tab-button:not(.active):hover,
+:root[data-theme='dark'] .settings-chip:not(.active):hover,
+:root[data-theme='dark'] .ghost-action:not(:disabled):hover,
+:root[data-theme='dark'] .history-clear-button:not(:disabled):hover,
+:root[data-theme='dark'] .mode-toggle-button:not(.active):hover,
+:root[data-theme='dark'] .usage-mode-button:not(.active):hover,
+:root[data-theme='dark'] .aux-chip:not(.active):not(.disabled):not(:disabled):hover,
+:root[data-theme='dark'] .era-button:not(.active):hover,
+:root[data-theme='dark'] .length-unit-button:not(.active):hover {
+  background: rgba(35, 51, 73, 0.98);
+  box-shadow:
+    inset 0 0 0 1px rgba(148, 163, 184, 0.16),
+    0 12px 24px rgba(2, 8, 18, 0.22);
+}
+
+:root[data-theme='dark'] .history-filter-row,
+:root[data-theme='dark'] .mode-toggle,
+:root[data-theme='dark'] .usage-mode-toggle,
+:root[data-theme='dark'] .settings-chip,
+:root[data-theme='dark'] .secondary-button,
+:root[data-theme='dark'] .ghost-action,
+:root[data-theme='dark'] .history-clear-button,
+:root[data-theme='dark'] .length-unit-button,
+:root[data-theme='dark'] .aux-chip,
+:root[data-theme='dark'] .era-button,
+:root[data-theme='dark'] .info-tab-button {
+  background: rgba(19, 32, 50, 0.92);
+  color: var(--text);
+  box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.12);
+}
+
+:root[data-theme='dark'] .settings-intro,
+:root[data-theme='dark'] .info-note,
+:root[data-theme='dark'] .usage-mode-note,
+:root[data-theme='dark'] .input-section-note,
+:root[data-theme='dark'] .currency-meta-note,
+:root[data-theme='dark'] .history-empty,
+:root[data-theme='dark'] .message.info,
+:root[data-theme='dark'] .message.success {
+  background: rgba(36, 95, 104, 0.18);
+  color: #c4d4e8;
+  box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.08);
+}
+
+:root[data-theme='dark'] .message.warning {
+  background: rgba(147, 95, 0, 0.22);
+  color: #ffd48a;
+}
+
+:root[data-theme='dark'] .message.error {
+  background: rgba(147, 0, 10, 0.22);
+  color: #ffccc8;
+}
+
+:root[data-theme='dark'] .page-heading-description,
+:root[data-theme='dark'] .today-card-label,
+:root[data-theme='dark'] .settings-section-head p,
+:root[data-theme='dark'] .settings-field label,
+:root[data-theme='dark'] .history-filter-caption,
+:root[data-theme='dark'] .history-item p,
+:root[data-theme='dark'] .history-item-head time,
+:root[data-theme='dark'] .result-card-label,
+:root[data-theme='dark'] .result-card-block small,
+:root[data-theme='dark'] .length-section-label,
+:root[data-theme='dark'] .length-result-tile span,
+:root[data-theme='dark'] .length-group-label,
+:root[data-theme='dark'] .length-unit-group-label,
+:root[data-theme='dark'] .length-value-pill span,
+:root[data-theme='dark'] .currency-reference-meta p,
+:root[data-theme='dark'] .currency-reference-meta span,
+:root[data-theme='dark'] .number-field span,
+:root[data-theme='dark'] .number-field-input em {
+  color: var(--text-subtle);
+}
+
+:root[data-theme='dark'] .today-card-main strong,
+:root[data-theme='dark'] .panel-head h3,
+:root[data-theme='dark'] .length-panel-title h3,
+:root[data-theme='dark'] .history-item h4,
+:root[data-theme='dark'] .info-intro,
+:root[data-theme='dark'] .currency-reference-meta strong,
+:root[data-theme='dark'] .footer-brand,
+:root[data-theme='dark'] .result-card-block strong,
+:root[data-theme='dark'] .length-result-tile strong,
+:root[data-theme='dark'] .length-value-pill input {
+  color: var(--primary);
+}
+
+:root[data-theme='dark'] .number-field-input input {
+  background: rgba(19, 32, 50, 0.94);
+}
+
+:root[data-theme='dark'] .number-field-input input:focus,
+:root[data-theme='dark'] .length-value-pill:focus-within {
+  box-shadow:
+    inset 0 0 0 1.5px rgba(56, 189, 248, 0.72),
+    0 0 0 3px rgba(56, 189, 248, 0.12);
+}
+
+:root[data-theme='dark'] .input-section + .input-section {
+  box-shadow: inset 0 1px 0 rgba(148, 163, 184, 0.12);
+}
+
+:root[data-theme='dark'] .footer-link-button:hover {
+  color: #dbe8ff;
 }

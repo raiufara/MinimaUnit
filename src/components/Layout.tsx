@@ -117,6 +117,19 @@ function ToolChip({
   );
 }
 
+function SettingsIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        className="gear-mark"
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M10.926 2.25a1.875 1.875 0 0 0-1.85 1.567l-.178 1.072a6.83 6.83 0 0 0-1.337.774l-1.021-.382a1.875 1.875 0 0 0-2.282.818L3.336 7.7a1.875 1.875 0 0 0 .432 2.386l.842.692a6.84 6.84 0 0 0 0 1.544l-.842.692a1.875 1.875 0 0 0-.432 2.386l.922 1.598a1.875 1.875 0 0 0 2.282.818l1.021-.382c.416.313.864.572 1.337.774l.178 1.072a1.875 1.875 0 0 0 1.85 1.567h2.148a1.875 1.875 0 0 0 1.85-1.567l.178-1.072c.473-.202.92-.46 1.337-.774l1.021.382a1.875 1.875 0 0 0 2.282-.818l.922-1.598a1.875 1.875 0 0 0-.432-2.386l-.842-.692a6.84 6.84 0 0 0 0-1.544l.842-.692a1.875 1.875 0 0 0 .432-2.386l-.922-1.598a1.875 1.875 0 0 0-2.282-.818l-1.021.382a6.83 6.83 0 0 0-1.337-.774l-.178-1.072a1.875 1.875 0 0 0-1.85-1.567h-2.148ZM12 15.75A3.75 3.75 0 1 0 12 8.25a3.75 3.75 0 0 0 0 7.5Z"
+      />
+    </svg>
+  );
+}
+
 export function Layout({
   activeToolId,
   activeToolLabel,
@@ -148,21 +161,10 @@ export function Layout({
         </div>
 
         <div className="header-actions">
-          <button type="button" className="header-icon-button" aria-label="オフライン状態">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M4.75 8.8a11.8 11.8 0 0 1 14.5 0" />
-              <path d="M7.5 11.8a7.9 7.9 0 0 1 9 0" />
-              <path d="M10.3 14.85a4.05 4.05 0 0 1 3.4 0" />
-              <path d="M3.6 4 20.4 20" />
-            </svg>
-          </button>
           <button type="button" className="header-icon-button" aria-label="設定" onClick={onOpenSettings}>
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M19.14 12.94c.04-.31.06-.63.06-.94s-.02-.63-.06-.94l2.03-1.58-1.92-3.32-2.39.96a7.33 7.33 0 0 0-1.63-.95L14.87 3h-3.74l-.36 2.17c-.58.23-1.13.55-1.63.94l-2.39-.96-1.92 3.32 2.03 1.58c-.04.31-.06.63-.06.95s.02.64.06.95l-2.03 1.58 1.92 3.32 2.39-.96c.5.39 1.05.7 1.63.93l.36 2.18h3.74l.36-2.18c.58-.23 1.13-.54 1.63-.93l2.39.96 1.92-3.32-2.03-1.58Z" />
-              <circle cx="12" cy="12" r="3.2" />
-            </svg>
+            <SettingsIcon />
           </button>
-          <div className={isOffline ? 'status-pill offline' : 'status-pill online'}>
+          <div className={isOffline ? 'status-pill offline' : 'status-pill online'} aria-label={isOffline ? 'オフライン利用可' : 'オンライン'}>
             <span className="status-dot" />
             {isOffline ? 'オフライン利用可' : 'オンライン'}
           </div>

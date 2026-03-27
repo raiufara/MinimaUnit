@@ -40,6 +40,33 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/icon-192.svg" />
     <link rel="manifest" href="/manifest.webmanifest" />
+    <script>
+      (() => {
+        try {
+          const raw = localStorage.getItem('unit-helper-settings-v1');
+          const parsed = raw ? JSON.parse(raw) : null;
+          const preference =
+            parsed?.themeMode === 'light' || parsed?.themeMode === 'dark' || parsed?.themeMode === 'system'
+              ? parsed.themeMode
+              : 'system';
+          const resolved =
+            preference === 'system'
+              ? window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+                ? 'dark'
+                : 'light'
+              : preference;
+          document.documentElement.dataset.theme = resolved;
+          document.documentElement.style.colorScheme = resolved;
+          const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+          if (themeColorMeta) {
+            themeColorMeta.setAttribute('content', resolved === 'dark' ? '#0b121e' : '#16324f');
+          }
+        } catch {
+          document.documentElement.dataset.theme = 'light';
+          document.documentElement.style.colorScheme = 'light';
+        }
+      })();
+    </script>
     <title>MinimaUnit - Smart Converter</title>
   </head>
   <body>

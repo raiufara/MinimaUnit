@@ -114,6 +114,14 @@ const TOOL_ITEMS: readonly ToolItem[] = [
 
 const HISTORY_SAVE_DELAY_MS = 900;
 
+function getSystemThemePreference(): 'light' | 'dark' {
+  if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
+    return 'light';
+  }
+
+  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+}
+
 function createInitialState(): EraAgeState {
   const today = new Date();
 
@@ -222,6 +230,7 @@ export default function App() {
   const location = useLocation();
   const navigate = useNavigate();
   const [settings, setSettings] = useState<AppSettings>(() => loadAppSettings());
+  const [systemTheme, setSystemTheme] = useState<'light' | 'dark'>(() => getSystemThemePreference());
   const [lastUsedToolId, setLastUsedToolId] = useState<ToolId | null>(() => loadLastActiveTool());
   const [activeToolId, setActiveToolId] = useState<ToolId>('era-age');
   const [isOffline, setIsOffline] = useState(typeof navigator !== 'undefined' ? !navigator.onLine : true);
@@ -241,6 +250,25 @@ export default function App() {
   useEffect(() => {
     saveAppSettings(settings);
   }, [settings]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
+      return undefined;
+    }
+
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const handleChange = (event: MediaQueryListEvent) => setSystemTheme(event.matches ? 'dark' : 'light');
+
+    setSystemTheme(mediaQuery.matches ? 'dark' : 'light');
+
+    if (typeof mediaQuery.addEventListener === 'function') {
+      mediaQuery.addEventListener('change', handleChange);
+      return () => mediaQuery.removeEventListener('change', handleChange);
+    }
+
+    mediaQuery.addListener(handleChange);
+    return () => mediaQuery.removeListener(handleChange);
+  }, []);
 
   useEffect(() => {
     const syncOnlineState = () => setIsOffline(!navigator.onLine);
@@ -382,6 +410,10 @@ export default function App() {
     () => getCurrencyCooldownMs(settings.currencyCooldownMinutes),
     [settings.currencyCooldownMinutes]
   );
+  const resolvedTheme = useMemo(
+    () => (settings.themeMode === 'system' ? systemTheme : settings.themeMode),
+    [settings.themeMode, systemTheme]
+  );
   const startupToolPath = useMemo(() => {
     if (settings.preferLastTool && lastUsedToolId) {
       return getToolPath(lastUsedToolId);
@@ -389,6 +421,22 @@ export default function App() {
 
     return getToolPath(settings.startupTool);
   }, [lastUsedToolId, settings.preferLastTool, settings.startupTool]);
+
+  useEffect(() => {
+    if (typeof document === 'undefined') {
+      return;
+    }
+
+    document.documentElement.dataset.theme = resolvedTheme;
+    document.documentElement.style.colorScheme = resolvedTheme;
+
+    const themeColor = resolvedTheme === 'dark' ? '#0b121e' : '#16324f';
+    const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+
+    if (themeColorMeta) {
+      themeColorMeta.setAttribute('content', themeColor);
+    }
+  }, [resolvedTheme]);
 
   return (
     <Layout
