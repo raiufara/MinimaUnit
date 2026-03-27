@@ -135,6 +135,10 @@ button {
   height: auto;
 }
 
+.brand-logo-dark {
+  display: none;
+}
+
 .brand-caption,
 .top-label {
   margin: 0;
@@ -2538,6 +2542,14 @@ button {
 
 :root[data-theme='dark'] body {
   background: var(--surface);
+}
+
+:root[data-theme='dark'] .brand-logo-light {
+  display: none;
+}
+
+:root[data-theme='dark'] .brand-logo-dark {
+  display: block;
 }
 
 :root[data-theme='dark'] .header-icon-button,

@@ -156,7 +156,8 @@ export function Layout({
         <div className="brand-group">
           <p className="brand-caption">Smart Converter Suite</p>
           <h1 className="brand-heading">
-            <img src="/logo-full.svg" alt="MinimaUnit - Smart Converter" className="brand-logo" />
+            <img src="/logo-full.svg" alt="MinimaUnit - Smart Converter" className="brand-logo brand-logo-light" />
+            <img src="/logo-full-dark.svg" alt="MinimaUnit - Smart Converter" className="brand-logo brand-logo-dark" />
           </h1>
         </div>
 

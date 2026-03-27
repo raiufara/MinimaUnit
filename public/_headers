@@ -21,6 +21,9 @@
 /logo-full.svg
   Cache-Control: public, max-age=3600
 
+/logo-full-dark.svg
+  Cache-Control: public, max-age=3600
+
 /logo-mark.svg
   Cache-Control: public, max-age=3600
 

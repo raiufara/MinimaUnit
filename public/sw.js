@@ -1,5 +1,5 @@
-const SHELL_CACHE = 'minimaunit-smart-converter-shell-v3';
-const RUNTIME_CACHE = 'minimaunit-smart-converter-runtime-v3';
+const SHELL_CACHE = 'minimaunit-smart-converter-shell-v4';
+const RUNTIME_CACHE = 'minimaunit-smart-converter-runtime-v4';
 const APP_SHELL = [
   '/',
   '/favicon.ico',
@@ -7,6 +7,7 @@ const APP_SHELL = [
   '/favicon-tiny.svg',
   '/manifest.webmanifest',
   '/logo-full.svg',
+  '/logo-full-dark.svg',
   '/logo-mark.svg',
   '/logo-mark-dark.svg',
   '/logo-mark-light.svg',
