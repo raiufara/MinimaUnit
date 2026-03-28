@@ -1279,6 +1279,10 @@ button {
   justify-content: center;
 }
 
+.era-page .input-actions.centered {
+  display: none;
+}
+
 .primary-button,
 .secondary-button {
   flex: 1;
