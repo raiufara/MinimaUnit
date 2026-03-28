@@ -5,7 +5,7 @@ import {
   deriveAgeModeBaseDate,
   deriveAgeModeTargetDate,
   formatEraYearLabel,
-  getEraPeriodLabels,
+  getEraPeriodLabel,
   normalizeToGregorian,
   resolveModeInput,
   toDateParts
@@ -19,8 +19,6 @@ const JAPANESE_ERA_OPTIONS: Array<{ value: Exclude<EraType, 'gregorian'>; label:
   { value: 'taisho', label: '大正' },
   { value: 'meiji', label: '明治' }
 ];
-
-const ERA_PERIOD_LABELS = getEraPeriodLabels();
 
 interface EraAgeConverterProps {
   state: EraAgeState;
@@ -508,6 +506,21 @@ export function EraAgeConverter({ state, onStateChange, onReset }: EraAgeConvert
   };
 
   const topMessages = [flashMessage, ...state.result.errors, ...state.result.warnings].filter(Boolean) as string[];
+  const selectedEraPeriodLabels = useMemo(() => {
+    const selectedEras = new Set<Exclude<EraType, 'gregorian'>>();
+
+    if (state.baseInputMode === 'era' && state.baseDate.era !== 'gregorian') {
+      selectedEras.add(state.baseDate.era);
+    }
+
+    if (state.targetInputMode === 'era' && state.targetDate.era !== 'gregorian') {
+      selectedEras.add(state.targetDate.era);
+    }
+
+    return Array.from(selectedEras)
+      .map((eraType) => getEraPeriodLabel(eraType))
+      .filter((label): label is string => Boolean(label));
+  }, [state.baseDate.era, state.baseInputMode, state.targetDate.era, state.targetInputMode]);
 
   return (
     <div className="era-page">
@@ -605,16 +618,18 @@ export function EraAgeConverter({ state, onStateChange, onReset }: EraAgeConvert
             />
             <ResultCard title="経過期間（日）" value={formatNumber(state.result.duration.totalDays, '日')} />
           </div>
-          <div className="era-period-section">
-            <h4>各元号の期間</h4>
-            <div className="era-period-list">
-              {ERA_PERIOD_LABELS.map((label) => (
-                <p key={label} className="era-period-item">
-                  {label}
-                </p>
-              ))}
+          {selectedEraPeriodLabels.length > 0 ? (
+            <div className="era-period-section">
+              <h4>選択中の元号期間</h4>
+              <div className="era-period-list">
+                {selectedEraPeriodLabels.map((label) => (
+                  <p key={label} className="era-period-item">
+                    {label}
+                  </p>
+                ))}
+              </div>
             </div>
-          </div>
+          ) : null}
         </section>
       </div>
     </div>

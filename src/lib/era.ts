@@ -121,6 +121,21 @@ export function getEraPeriodLabels(): string[] {
   });
 }
 
+export function getEraPeriodLabel(eraType: Exclude<EraType, 'gregorian'>): string | null {
+  const index = ERA_DEFINITIONS.findIndex((era) => era.type === eraType);
+  if (index < 0) {
+    return null;
+  }
+
+  const era = ERA_DEFINITIONS[index];
+  const nextEra = ERA_DEFINITIONS[index + 1];
+  const endDate = nextEra
+    ? new Date(nextEra.start.getFullYear(), nextEra.start.getMonth(), nextEra.start.getDate() - 1)
+    : null;
+
+  return `${era.label}：${formatGregorianDateLabel(era.start)} 〜 ${endDate ? formatGregorianDateLabel(endDate) : ''}`;
+}
+
 function findCanonicalEra(date: Date): EraDefinition | null {
   for (let index = ERA_DEFINITIONS.length - 1; index >= 0; index -= 1) {
     const era = ERA_DEFINITIONS[index];
