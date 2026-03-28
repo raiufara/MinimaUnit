@@ -505,7 +505,7 @@ export function EraAgeConverter({ state, onStateChange, onReset }: EraAgeConvert
     }
   };
 
-  const topMessages = [flashMessage, ...state.result.errors, ...state.result.warnings].filter(Boolean) as string[];
+  const topMessages = [flashMessage, ...state.result.warnings].filter(Boolean) as string[];
   const selectedEraPeriodLabels = useMemo(() => {
     const selectedEras = new Set<Exclude<EraType, 'gregorian'>>();
 
@@ -595,11 +595,22 @@ export function EraAgeConverter({ state, onStateChange, onReset }: EraAgeConvert
         </section>
 
         <section className="panel panel-result">
-          <div className="panel-head">
+          <div className="panel-head result-panel-head">
             <h3>計算結果</h3>
-            <button type="button" className="ghost-action highlight" onClick={copyResults}>
-              結果をコピー
-            </button>
+            <div className="panel-head-side">
+              {state.result.errors.length > 0 ? (
+                <div className="panel-head-messages" role="alert" aria-live="polite">
+                  {state.result.errors.map((message) => (
+                    <p key={message} className="message error compact">
+                      {message}
+                    </p>
+                  ))}
+                </div>
+              ) : null}
+              <button type="button" className="ghost-action highlight" onClick={copyResults}>
+                結果をコピー
+              </button>
+            </div>
           </div>
 
           <div className="result-grid">
