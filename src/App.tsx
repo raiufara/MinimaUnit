@@ -124,14 +124,7 @@ function getSystemThemePreference(): 'light' | 'dark' {
 
 function createInitialState(): EraAgeState {
   const today = new Date();
-
-  const baseDate = {
-    era: 'heisei' as const,
-    year: 12,
-    month: 4,
-    day: 1,
-    granularity: 'date' as const
-  };
+  const baseDate = toDateParts(today);
   const targetDate = toDateParts(today);
 
   return {
