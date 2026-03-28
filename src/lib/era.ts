@@ -9,14 +9,14 @@ interface EraDefinition {
 }
 
 const ERA_DEFINITIONS: EraDefinition[] = [
-  { type: 'meiji', label: '明治', ruby: 'めいじ', start: new Date(1873, 0, 1), offset: 1867 },
+  { type: 'meiji', label: '明治', ruby: 'めいじ', start: new Date(1868, 0, 23), offset: 1867 },
   { type: 'taisho', label: '大正', ruby: 'たいしょう', start: new Date(1912, 6, 30), offset: 1911 },
   { type: 'showa', label: '昭和', ruby: 'しょうわ', start: new Date(1926, 11, 25), offset: 1925 },
   { type: 'heisei', label: '平成', ruby: 'へいせい', start: new Date(1989, 0, 8), offset: 1988 },
   { type: 'reiwa', label: '令和', ruby: 'れいわ', start: new Date(2019, 4, 1), offset: 2018 }
 ];
 
-const SUPPORTED_START = new Date(1873, 0, 1);
+const SUPPORTED_START = new Date(1868, 0, 23);
 const HEAVENLY_STEMS = [
   { kanji: '甲', ruby: 'きのえ' },
   { kanji: '乙', ruby: 'きのと' },
@@ -104,6 +104,21 @@ function shiftFullYears(date: Date, yearDelta: number): Date {
 
 function formatWarekiLabel(era: EraDefinition, warekiYear: number): string {
   return `${era.label}${warekiYear}年`;
+}
+
+function formatGregorianDateLabel(date: Date): string {
+  return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`;
+}
+
+export function getEraPeriodLabels(): string[] {
+  return ERA_DEFINITIONS.map((era, index) => {
+    const nextEra = ERA_DEFINITIONS[index + 1];
+    const endDate = nextEra
+      ? new Date(nextEra.start.getFullYear(), nextEra.start.getMonth(), nextEra.start.getDate() - 1)
+      : null;
+
+    return `${era.label}：${formatGregorianDateLabel(era.start)} 〜 ${endDate ? formatGregorianDateLabel(endDate) : ''}`;
+  });
 }
 
 function findCanonicalEra(date: Date): EraDefinition | null {
@@ -225,7 +240,7 @@ export function normalizeDateInput(input: DateInput): NormalizedDateResult {
   const candidateDate = new Date(gregorianYear, month - 1, day);
 
   if (candidateDate < SUPPORTED_START) {
-    errors.push('明治5年以前は未対応です。');
+    errors.push('1868年1月23日より前は未対応です。');
     return { gregorianYear: null, gregorianDate: null, warnings, errors };
   }
 

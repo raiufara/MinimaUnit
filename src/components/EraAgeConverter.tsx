@@ -5,6 +5,7 @@ import {
   deriveAgeModeBaseDate,
   deriveAgeModeTargetDate,
   formatEraYearLabel,
+  getEraPeriodLabels,
   normalizeToGregorian,
   resolveModeInput,
   toDateParts
@@ -18,6 +19,8 @@ const JAPANESE_ERA_OPTIONS: Array<{ value: Exclude<EraType, 'gregorian'>; label:
   { value: 'taisho', label: '大正' },
   { value: 'meiji', label: '明治' }
 ];
+
+const ERA_PERIOD_LABELS = getEraPeriodLabels();
 
 interface EraAgeConverterProps {
   state: EraAgeState;
@@ -517,6 +520,7 @@ export function EraAgeConverter({ state, onStateChange, onReset }: EraAgeConvert
             </strong>
             <span>{todaySummary.eraLabel ?? '-'}</span>
           </div>
+
         </section>
 
         {topMessages.length > 0 ? (
@@ -600,6 +604,16 @@ export function EraAgeConverter({ state, onStateChange, onReset }: EraAgeConvert
               value={`${formatNumber(state.result.duration.totalMonths, 'ヶ月')} ${formatNumber(state.result.duration.days, '日')}`}
             />
             <ResultCard title="経過期間（日）" value={formatNumber(state.result.duration.totalDays, '日')} />
+          </div>
+          <div className="era-period-section">
+            <h4>各元号の期間</h4>
+            <div className="era-period-list">
+              {ERA_PERIOD_LABELS.map((label) => (
+                <p key={label} className="era-period-item">
+                  {label}
+                </p>
+              ))}
+            </div>
           </div>
         </section>
       </div>

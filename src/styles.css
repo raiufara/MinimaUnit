@@ -1315,6 +1315,33 @@ button {
   gap: 14px;
 }
 
+.era-period-section {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--outline);
+}
+
+.era-period-section h4 {
+  margin: 0 0 10px;
+  font-size: 0.88rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: var(--text-subtle);
+}
+
+.era-period-list {
+  display: grid;
+  gap: 8px;
+}
+
+.era-period-item {
+  margin: 0;
+  font-size: 0.92rem;
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--text-subtle);
+}
+
 .result-card-block {
   display: flex;
   flex-direction: column;
