@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { AreaConverter } from './components/AreaConverter';
 import { CurrencyConverter } from './components/CurrencyConverter';
 import { EraAgeConverter } from './components/EraAgeConverter';
@@ -196,6 +196,10 @@ function getToolPath(toolId: ToolId): string {
   return TOOL_ITEMS.find((tool) => tool.id === toolId)?.path ?? '/era-age';
 }
 
+function getToolIdByPath(pathname: string): ToolId | null {
+  return TOOL_ITEMS.find((tool) => tool.path === pathname)?.id ?? null;
+}
+
 function useHistoryAutosave<K extends ToolId>(
   toolId: K,
   state: ToolStateMap[K],
@@ -272,15 +276,6 @@ export default function App() {
       window.removeEventListener('offline', syncOnlineState);
     };
   }, []);
-
-  useEffect(() => {
-    const matchedTool = TOOL_ITEMS.find((tool) => tool.path === location.pathname);
-    if (matchedTool) {
-      setActiveToolId(matchedTool.id);
-      setLastUsedToolId(matchedTool.id);
-      saveLastActiveTool(matchedTool.id);
-    }
-  }, [location.pathname]);
 
   const activeToolLabel = useMemo(
     () => TOOL_ITEMS.find((item) => item.id === activeToolId)?.label ?? '年齢・期間',
@@ -415,6 +410,20 @@ export default function App() {
     return getToolPath(settings.startupTool);
   }, [lastUsedToolId, settings.preferLastTool, settings.startupTool]);
 
+  const startupToolId = useMemo(
+    () => getToolIdByPath(startupToolPath) ?? 'era-age',
+    [startupToolPath]
+  );
+
+  useEffect(() => {
+    const matchedToolId = location.pathname === '/' ? startupToolId : getToolIdByPath(location.pathname);
+    if (matchedToolId) {
+      setActiveToolId(matchedToolId);
+      setLastUsedToolId(matchedToolId);
+      saveLastActiveTool(matchedToolId);
+    }
+  }, [location.pathname, startupToolId]);
+
   useEffect(() => {
     if (typeof document === 'undefined') {
       return;
@@ -430,6 +439,127 @@ export default function App() {
       themeColorMeta.setAttribute('content', themeColor);
     }
   }, [resolvedTheme]);
+
+  const renderToolRoute = useCallback(
+    (toolId: ToolId) => {
+      switch (toolId) {
+        case 'era-age':
+          return (
+            <EraAgeConverter
+              state={eraAgeState}
+              onReset={() => {
+                const today = toDateParts(new Date());
+                const nextState = {
+                  baseDate: today,
+                  targetDate: today,
+                  baseInputMode: 'era' as const,
+                  targetInputMode: 'era' as const,
+                  result: computeEraAgeResult(today, today)
+                };
+                setActiveToolId('era-age');
+                setEraAgeState(nextState);
+              }}
+              onStateChange={(nextState) => {
+                setActiveToolId('era-age');
+                setEraAgeState(nextState);
+              }}
+            />
+          );
+        case 'length':
+          return (
+            <LengthConverter
+              state={lengthState}
+              onReset={() => setLengthState(createInitialLengthState())}
+              onStateChange={(nextState) => {
+                setActiveToolId('length');
+                setLengthState(nextState);
+              }}
+            />
+          );
+        case 'weight':
+          return (
+            <WeightConverter
+              state={weightState}
+              onReset={() => setWeightState(createInitialWeightState(settings))}
+              onStateChange={(nextState) => {
+                setActiveToolId('weight');
+                setWeightState(nextState);
+              }}
+            />
+          );
+        case 'area':
+          return (
+            <AreaConverter
+              state={areaState}
+              onReset={() => setAreaState(createInitialAreaState(settings))}
+              onStateChange={(nextState) => {
+                setActiveToolId('area');
+                setAreaState(nextState);
+              }}
+            />
+          );
+        case 'volume':
+          return (
+            <VolumeConverter
+              state={volumeState}
+              onReset={() => setVolumeState(createInitialVolumeState())}
+              onStateChange={(nextState) => {
+                setActiveToolId('volume');
+                setVolumeState(nextState);
+              }}
+            />
+          );
+        case 'temperature':
+          return (
+            <TemperatureConverter
+              state={temperatureState}
+              onReset={() => setTemperatureState(createInitialTemperatureState())}
+              onStateChange={(nextState) => {
+                setActiveToolId('temperature');
+                setTemperatureState(nextState);
+              }}
+            />
+          );
+        case 'speed':
+          return (
+            <SpeedConverter
+              state={speedState}
+              onReset={() => setSpeedState(createInitialSpeedState())}
+              onStateChange={(nextState) => {
+                setActiveToolId('speed');
+                setSpeedState(nextState);
+              }}
+            />
+          );
+        case 'currency':
+          return (
+            <CurrencyConverter
+              state={currencyState}
+              cooldownMs={currencyCooldownMs}
+              onReset={() => setCurrencyState(createInitialCurrencyState(settings))}
+              onStateChange={(nextState) => {
+                setActiveToolId('currency');
+                setCurrencyState(nextState);
+              }}
+            />
+          );
+        default:
+          return null;
+      }
+    },
+    [
+      areaState,
+      currencyCooldownMs,
+      currencyState,
+      eraAgeState,
+      lengthState,
+      settings,
+      speedState,
+      temperatureState,
+      volumeState,
+      weightState
+    ]
+  );
 
   return (
     <Layout
@@ -479,123 +609,15 @@ export default function App() {
       }
     >
       <Routes>
-        <Route path="/" element={<Navigate to={startupToolPath} replace />} />
-        <Route
-          path="/era-age"
-          element={
-            <EraAgeConverter
-              state={eraAgeState}
-              onReset={() => {
-                const today = toDateParts(new Date());
-                const nextState = {
-                  baseDate: today,
-                  targetDate: today,
-                  baseInputMode: 'era' as const,
-                  targetInputMode: 'era' as const,
-                  result: computeEraAgeResult(today, today)
-                };
-                setActiveToolId('era-age');
-                setEraAgeState(nextState);
-              }}
-              onStateChange={(nextState) => {
-                setActiveToolId('era-age');
-                setEraAgeState(nextState);
-              }}
-            />
-          }
-        />
-        <Route
-          path="/length"
-          element={
-            <LengthConverter
-              state={lengthState}
-              onReset={() => setLengthState(createInitialLengthState())}
-              onStateChange={(nextState) => {
-                setActiveToolId('length');
-                setLengthState(nextState);
-              }}
-            />
-          }
-        />
-        <Route
-          path="/weight"
-          element={
-            <WeightConverter
-              state={weightState}
-              onReset={() => setWeightState(createInitialWeightState(settings))}
-              onStateChange={(nextState) => {
-                setActiveToolId('weight');
-                setWeightState(nextState);
-              }}
-            />
-          }
-        />
-        <Route
-          path="/area"
-          element={
-            <AreaConverter
-              state={areaState}
-              onReset={() => setAreaState(createInitialAreaState(settings))}
-              onStateChange={(nextState) => {
-                setActiveToolId('area');
-                setAreaState(nextState);
-              }}
-            />
-          }
-        />
-        <Route
-          path="/volume"
-          element={
-            <VolumeConverter
-              state={volumeState}
-              onReset={() => setVolumeState(createInitialVolumeState())}
-              onStateChange={(nextState) => {
-                setActiveToolId('volume');
-                setVolumeState(nextState);
-              }}
-            />
-          }
-        />
-        <Route
-          path="/temperature"
-          element={
-            <TemperatureConverter
-              state={temperatureState}
-              onReset={() => setTemperatureState(createInitialTemperatureState())}
-              onStateChange={(nextState) => {
-                setActiveToolId('temperature');
-                setTemperatureState(nextState);
-              }}
-            />
-          }
-        />
-        <Route
-          path="/speed"
-          element={
-            <SpeedConverter
-              state={speedState}
-              onReset={() => setSpeedState(createInitialSpeedState())}
-              onStateChange={(nextState) => {
-                setActiveToolId('speed');
-                setSpeedState(nextState);
-              }}
-            />
-          }
-        />
-        <Route
-          path="/currency"
-          element={
-            <CurrencyConverter
-              state={currencyState}
-              cooldownMs={currencyCooldownMs}
-              onReset={() => setCurrencyState(createInitialCurrencyState(settings))}
-              onStateChange={(nextState) => {
-                setActiveToolId('currency');
-                setCurrencyState(nextState);
-              }}
-            />
-          }
-        />
+        <Route path="/" element={renderToolRoute(startupToolId)} />
+        <Route path="/era-age" element={renderToolRoute('era-age')} />
+        <Route path="/length" element={renderToolRoute('length')} />
+        <Route path="/weight" element={renderToolRoute('weight')} />
+        <Route path="/area" element={renderToolRoute('area')} />
+        <Route path="/volume" element={renderToolRoute('volume')} />
+        <Route path="/temperature" element={renderToolRoute('temperature')} />
+        <Route path="/speed" element={renderToolRoute('speed')} />
+        <Route path="/currency" element={renderToolRoute('currency')} />
       </Routes>
     </Layout>
   );

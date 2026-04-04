@@ -55,12 +55,12 @@ const INFO_SECTIONS: readonly InfoSection[] = [
     ],
     notes: [
       '現時点では、アプリ内フォームや専用メール窓口は設けていません。必要に応じて今後追加します。',
-      '公開サイトのURLは https://minimaunit.pages.dev/ です。'
+      '公開サイトのURLは https://unit.minimaapps.dev/ です。'
     ],
     links: [
       {
         label: '公開サイトを開く',
-        href: 'https://minimaunit.pages.dev/'
+        href: 'https://unit.minimaapps.dev/'
       },
       {
         label: 'GitHub Issues を開く',
